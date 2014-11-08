@@ -1,10 +1,8 @@
 package com.bitplan.java8sorttest;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
@@ -27,15 +25,6 @@ import org.junit.Test;
 public class TestEclipseLinkSorting {
 	protected static Logger LOGGER = Logger.getLogger("com.bitplan.storage.sql");
 
-	public static class ByNameComparator implements Comparator<Document> {
-
-		// @Override
-		public int compare(Document d1, Document d2) {
-			LOGGER.log(Level.INFO,"comparing " + d1.getName() + "<=>" + d2.getName());
-			return d1.getName().compareTo(d2.getName());
-		}
-	}
-	
 	@Test 
 	public void testJPA() throws Exception {
 		Map<String,String> jpaProperties = new HashMap<String,String>();

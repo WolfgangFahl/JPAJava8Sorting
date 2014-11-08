@@ -10,4 +10,5 @@ import java.util.List;
 public interface Folder {
 	public List<Document> getDocuments();
 	public void setDocuments(List<Document> documents);
+	public List<Document> getDocumentsByModificationDate();
 }

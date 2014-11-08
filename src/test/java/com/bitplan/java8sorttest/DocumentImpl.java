@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity(name="Document")
 @Table(name = "document")
-public class DocumentImpl implements Document, Serializable {
+public class DocumentImpl implements Document {
 	/**
 	 * 
 	 */
@@ -22,13 +22,13 @@ public class DocumentImpl implements Document, Serializable {
   private long id;
   
 	String name;
-	FolderImpl parentFolder;
+	Folder parentFolder;
 
 	/**
 	 * @return the parentFolder
 	 */
 	@ManyToOne(targetEntity=FolderImpl.class)
-	public FolderImpl getParentFolder() {
+	public Folder getParentFolder() {
 		return parentFolder;
 	}
 

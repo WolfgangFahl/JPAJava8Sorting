@@ -23,8 +23,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.bitplan.java8sorttest.TestEclipseLinkSorting.ByNameComparator;
-
 @SuppressWarnings("restriction")
 @XmlRootElement(name="folder")
 @Entity(name="Folder")

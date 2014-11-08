@@ -7,5 +7,5 @@ package com.bitplan.java8sorttest;
  */
 public interface Document {
 	public String getName();
-	public FolderImpl getParentFolder();
+	public Folder getParentFolder();
 }
