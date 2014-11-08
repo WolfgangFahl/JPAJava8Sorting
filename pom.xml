@@ -6,6 +6,9 @@
 	<groupId>com.bitplan.java</groupId>
 	<artifactId>com.bitplan.testjpa8sorting</artifactId>
 	<version>0.0.1</version>
+	<properties>
+	  <junit4.version>4.11</junit4.version>
+	</properties>
 	<dependencies>
 		<!-- Eclipse Link persistence -->
 		<dependency>
@@ -28,6 +31,13 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.18</version>
+		</dependency>
+		<!-- JUnit testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit4.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
