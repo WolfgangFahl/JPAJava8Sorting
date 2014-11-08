@@ -3,7 +3,6 @@ package com.bitplan.java8sorttest;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -11,8 +10,6 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,6 +19,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -47,6 +45,7 @@ public class FolderJPA implements Folder, Serializable {
 	 * @return name
 	 */
 	@Id
+	@XmlID
 	@Column(name = "name")
 	@Override
 	public String getName() {
@@ -61,8 +60,8 @@ public class FolderJPA implements Folder, Serializable {
 	/**
 	 * @return the documents
 	 */
-	@XmlElementWrapper(name = "document")
-	@XmlElement(type = DocumentJPA.class)
+	@XmlElementWrapper(name = "documents")
+	@XmlElement(type = DocumentJPA.class,name="document")
 	@OneToMany(targetEntity = DocumentJPA.class, cascade = CascadeType.ALL, mappedBy = "parentFolder")
 	@Override
 	public List<Document> getDocuments() {
@@ -105,19 +104,25 @@ public class FolderJPA implements Folder, Serializable {
 		FolderJPA folder = (FolderJPA) unmarshaller.unmarshal(reader);
 		return folder;
 	}
+	
+	public void addDocument(Document document) { 
+		this.getDocuments().add(document);
+		document.setParentFolder(this);
+  }
+
 	/**
 	 * get a folder example
 	 * @return
 	 */
 	public static FolderJPA getFolderExample() {
-		List<Document> documents = new ArrayList<Document>();
-		documents.add(new DocumentJPA("test2"));
-		documents.add(new DocumentJPA("test1"));
 		FolderJPA folder = new FolderJPA();
 		folder.setName("testFolder");
-		folder.setDocuments(documents);
+		folder.addDocument(new DocumentJPA("test3"));
+		folder.addDocument(new DocumentJPA("test2"));
+		folder.addDocument(new DocumentJPA("test1"));
 		return folder;
 	}
+	
 	@Transient
 	Folder impl = new FolderImpl();
 

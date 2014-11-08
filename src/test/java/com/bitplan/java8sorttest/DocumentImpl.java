@@ -1,5 +1,7 @@
 package com.bitplan.java8sorttest;
 
+import org.w3c.dom.stylesheets.DocumentStyle;
+
 public class DocumentImpl implements Document {
 
 	String name;
@@ -32,6 +34,7 @@ public class DocumentImpl implements Document {
 	public void setParentFolder(Folder parentFolder) {
 		this.parentFolder = parentFolder;
 	}
+
 	
 	public Document getImpl() {
 		return this;

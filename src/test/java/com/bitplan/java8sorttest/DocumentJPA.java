@@ -5,14 +5,13 @@ import java.io.Serializable;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name="Document")
@@ -33,6 +32,7 @@ public class DocumentJPA implements Document,Serializable {
 	public DocumentJPA(String name) {
 		this.setName(name);
 	}
+	
 
 	@Transient
 	Document impl=new DocumentImpl();
@@ -59,6 +59,7 @@ public class DocumentJPA implements Document,Serializable {
 	@XmlElements({
     @XmlElement(name="Folder", type=FolderJPA.class)
   })
+	@XmlIDREF
 	@Override
 	public Folder getParentFolder() {
 		return getImpl().getParentFolder();

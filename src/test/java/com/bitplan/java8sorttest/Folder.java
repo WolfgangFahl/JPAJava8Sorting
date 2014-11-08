@@ -30,5 +30,7 @@ public interface Folder {
 	public default List<Document> getDocumentsByModificationDate() {
 		return getImpl().getDocumentsByModificationDate();
 	}
+	
+	public default void addDocument(Document document) { getImpl().addDocument(document);}
 
 }

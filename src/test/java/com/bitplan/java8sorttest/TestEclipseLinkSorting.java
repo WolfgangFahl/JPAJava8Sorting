@@ -30,17 +30,24 @@ import org.junit.FixMethodOrder;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestEclipseLinkSorting {
 	protected static Logger LOGGER = Logger.getLogger("com.bitplan.storage.sql");
-	String folderXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-			+ "<folder>\n"
-			+ "    <document>\n"
-			+ "        <documents>\n"
-			+ "            <name>test2</name>\n"
-			+ "        </documents>\n"
-			+ "        <documents>\n"
-			+ "            <name>test1</name>\n"
-			+ "        </documents>\n"
-			+ "    </document>\n"
-			+ "    <name>testFolder</name>\n" + "</folder>\n";
+	String folderXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
+			"<folder>\n" + 
+			"    <documents>\n" + 
+			"        <document>\n" + 
+			"            <name>test3</name>\n" + 
+			"            <Folder>testFolder</Folder>\n" + 
+			"        </document>\n" + 
+			"        <document>\n" + 
+			"            <name>test2</name>\n" + 
+			"            <Folder>testFolder</Folder>\n" + 
+			"        </document>\n" + 
+			"        <document>\n" + 
+			"            <name>test1</name>\n" + 
+			"            <Folder>testFolder</Folder>\n" + 
+			"        </document>\n" + 
+			"    </documents>\n" + 
+			"    <name>testFolder</name>\n" + 
+			"</folder>\n";
 
 	static EntityManager entityManager;
 
@@ -97,8 +104,11 @@ public class TestEclipseLinkSorting {
 		FolderJPA folder = FolderJPA.fromXML(folderXml);
 		assertNotNull(folder);
 		List<Document> sortedDocuments = folder.getDocumentsByModificationDate();
+		int index=0;
 		for (Document document : sortedDocuments) {
 			System.out.println(document.getName());
+			index++;
+			assertEquals("test"+index,document.getName());
 		}
 
 	}

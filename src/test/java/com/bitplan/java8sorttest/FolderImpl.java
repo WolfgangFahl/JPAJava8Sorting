@@ -33,6 +33,11 @@ public class FolderImpl implements Folder {
 	public void setDocuments(List<Document> pdocuments) {
 		documents=pdocuments;
 	}
+	
+	public void addDocument(Document document) { 
+		documents.add(document);
+		document.setParentFolder(this);
+  }
 
 	public List<Document> getDocumentsByModificationDate() {
 		List<Document> docs = this.getDocuments();
