@@ -6,6 +6,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity(name = "Folder")
 @Table(name = "folder")
 @XmlRootElement(name = "folder")
+@Access(AccessType.PROPERTY)
 public class FolderJPA implements Folder, Serializable {
 	/**
 	 * 
@@ -38,15 +41,12 @@ public class FolderJPA implements Folder, Serializable {
 	public FolderJPA() {
 	};
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
 	/**
 	 * getter for name
 	 * 
 	 * @return name
 	 */
+	@Id
 	@Column(name = "name")
 	@Override
 	public String getName() {
@@ -114,6 +114,7 @@ public class FolderJPA implements Folder, Serializable {
 		documents.add(new DocumentJPA("test2"));
 		documents.add(new DocumentJPA("test1"));
 		FolderJPA folder = new FolderJPA();
+		folder.setName("testFolder");
 		folder.setDocuments(documents);
 		return folder;
 	}

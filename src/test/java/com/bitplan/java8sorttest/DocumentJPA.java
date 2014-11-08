@@ -2,6 +2,8 @@ package com.bitplan.java8sorttest;
 
 import java.io.Serializable;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,15 +18,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity(name="Document")
 @Table(name = "document")
 @XmlRootElement(name = "document")
+@Access(AccessType.PROPERTY)
 public class DocumentJPA implements Document,Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1206897141744490247L;
-  
-	@Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
 
 	/**
 	 * default constructor to make jaxb happy
@@ -43,6 +42,7 @@ public class DocumentJPA implements Document,Serializable {
 	}
 
 	@Override
+	@Id
 	public String getName() {
 		return getImpl().getName();
 	}
