@@ -22,20 +22,20 @@ public class DocumentImpl implements Document, Serializable {
   private long id;
   
 	String name;
-	Folder parentFolder;
+	FolderImpl parentFolder;
 
 	/**
 	 * @return the parentFolder
 	 */
-	@ManyToOne(targetEntity=Folder.class)
-	public Folder getParentFolder() {
+	@ManyToOne(targetEntity=FolderImpl.class)
+	public FolderImpl getParentFolder() {
 		return parentFolder;
 	}
 
 	/**
 	 * @param parentFolder the parentFolder to set
 	 */
-	public void setParentFolder(Folder parentFolder) {
+	public void setParentFolder(FolderImpl parentFolder) {
 		this.parentFolder = parentFolder;
 	}
 

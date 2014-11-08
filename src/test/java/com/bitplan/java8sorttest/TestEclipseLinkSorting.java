@@ -51,7 +51,7 @@ public class TestEclipseLinkSorting {
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.bitplan.testentity", jpaProperties);
 		EntityManager em = emf.createEntityManager();
-		Folder folder=Folder.getFolderExample();
+		FolderImpl folder=FolderImpl.getFolderExample();
 		em.getTransaction().begin();
 		em.persist(folder);
 		em.getTransaction().commit();
@@ -73,7 +73,7 @@ public class TestEclipseLinkSorting {
 				"        </documents>\n" + 
 				"    </document>\n" + 
 				"</folder>";
-		Folder folder=Folder.fromXML(folderXml);	
+		FolderImpl folder=FolderImpl.fromXML(folderXml);	
 		List<Document> sortedDocuments = folder.getDocumentsByModificationDate();
 		for (Document document : sortedDocuments) {
 			System.out.println(document.getName());
