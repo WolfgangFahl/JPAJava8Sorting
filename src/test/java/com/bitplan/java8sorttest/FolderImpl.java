@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.bitplan.java8sorttest.TestEclipseLinkSorting.ByNameComparator;
 
-@XmlRootElement
+@SuppressWarnings("restriction")
+@XmlRootElement(name="folder")
 @Entity(name="Folder")
 @Table(name = "folder")
 public class FolderImpl implements Folder,Serializable {
