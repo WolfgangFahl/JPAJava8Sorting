@@ -1,15 +1,13 @@
 package com.bitplan.java8sorttest;
 
-import org.junit.Test;
-
 import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +22,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -32,6 +29,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.junit.Test;
 
 /**
  * http://stackoverflow.com/questions/26816650/java8-collections-sort-sometimes-
@@ -210,6 +209,7 @@ public class TestEclipseLinkSorting {
 		jpaProperties.put("eclipselink.ddl-generation","drop-and-create-tables");
 		jpaProperties.put("eclipselink.target-database", "MYSQL");
 		jpaProperties.put("eclipselink.logging.level","FINE");
+		
 		jpaProperties.put("javax.persistence.jdbc.user", "cm");
 		jpaProperties.put("javax.persistence.jdbc.password","secret");
 		jpaProperties.put("javax.persistence.jdbc.url","jdbc:mysql://localhost:3306/testsqlstorage");

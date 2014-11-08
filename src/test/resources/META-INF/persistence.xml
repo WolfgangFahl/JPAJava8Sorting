@@ -6,9 +6,8 @@
 	<persistence-unit name="com.bitplan.testentity" transaction-type="RESOURCE_LOCAL">
 		<description>testentity</description>
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>com.bitplan.storage.sql.TestEclipseLinkSorting$Folder</class>
-		<class>com.bitplan.storage.sql.TestEclipseLinkSorting$Document</class>
-		<class>com.bitplan.storage.sql.TestEclipseLinkSorting$DocumentImpl</class>
+		<class>com.bitplan.java8sorttest.TestEclipseLinkSorting$Folder</class>
+		<class>com.bitplan.java8sorttest.TestEclipseLinkSorting$DocumentImpl</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>
 		<!--  set programmatically -->
