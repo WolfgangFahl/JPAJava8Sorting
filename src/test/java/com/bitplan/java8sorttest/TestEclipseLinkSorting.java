@@ -196,7 +196,7 @@ public class TestEclipseLinkSorting {
 
 	public static class ByNameComparator implements Comparator<Document> {
 
-		@Override
+		// @Override
 		public int compare(Document d1, Document d2) {
 			LOGGER.log(Level.INFO,"comparing " + d1.getName() + "<=>" + d2.getName());
 			return d1.getName().compareTo(d2.getName());
