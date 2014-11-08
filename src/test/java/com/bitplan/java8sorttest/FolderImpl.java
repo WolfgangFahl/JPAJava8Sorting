@@ -1,66 +1,37 @@
 package com.bitplan.java8sorttest;
 
-import java.io.Serializable;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+public class FolderImpl implements Folder {
 
-@SuppressWarnings("restriction")
-@XmlRootElement(name="folder")
-@Entity(name="Folder")
-@Table(name = "folder")
-public class FolderImpl implements Folder,Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -590883790792959372L;
+	String name;
 	
-	List<Document> documents;
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 
 	/**
-	 * default constructor for JaxB
+	 * @param name the name to set
 	 */
-	public FolderImpl() {
-	};
+	public void setName(String name) {
+		this.name = name;
+	}
 	
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-
-	/**
-	 * @return the documents
-	 */
-	@XmlElementWrapper(name = "document")
-	@XmlElement(type=DocumentImpl.class)
-  @OneToMany(targetEntity=DocumentImpl.class, cascade=CascadeType.ALL, mappedBy="parentFolder")
+	List<Document> documents=new ArrayList<Document>();
+	
 	public List<Document> getDocuments() {
 		return documents;
 	}
 
-	/**
-	 * @param documents
-	 *          the documents to set
-	 */
-	public void setDocuments(List<Document> documents) {
-		this.documents = documents;
+	public void setDocuments(List<Document> pdocuments) {
+		documents=pdocuments;
 	}
 
 	public List<Document> getDocumentsByModificationDate() {
@@ -70,47 +41,11 @@ public class FolderImpl implements Folder,Serializable {
 		Collections.sort(docs, comparator);
 		return docs;
 	}
-	
-	/**
-	 * marshal me to an xml string
-	 * @return
-	 * @throws Exception
-	 */
-	public String asXML() throws Exception {
-		JAXBContext context = JAXBContext.newInstance(FolderImpl.class);
-		Marshaller marshaller = context.createMarshaller();
-		java.io.StringWriter sw = new StringWriter();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.marshal(this, sw);
-		String result=sw.toString();
-		return result;
-	}
-	
-	/**
-	 * get a Folder from an XML String
-	 * @param xml
-	 * @return
-	 * @throws Exception
-	 */
-	public static FolderImpl fromXML(String xml) throws Exception {
-		JAXBContext jaxbContext = JAXBContext.newInstance(FolderImpl.class);
-		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		StringReader reader = new StringReader(xml);
-		FolderImpl folder = (FolderImpl) unmarshaller.unmarshal(reader);
-		return folder;
+	@Override
+	public Folder getImpl() {
+		return this;
 	}
 	
-	/**
-	 * get a folder example
-	 * @return
-	 */
-	public static FolderImpl getFolderExample() {
-		List<Document> documents = new ArrayList<Document>();
-		documents.add(new DocumentImpl("test2"));
-		documents.add(new DocumentImpl("test1"));
-		FolderImpl folder = new FolderImpl();
-		folder.setDocuments(documents);
-		return folder;
-	}
+
 }

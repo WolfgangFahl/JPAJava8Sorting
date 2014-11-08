@@ -1,5 +1,7 @@
 package com.bitplan.java8sorttest;
 
+import static org.junit.Assert.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,18 @@ import org.junit.Test;
  */
 public class TestEclipseLinkSorting {
 	protected static Logger LOGGER = Logger.getLogger("com.bitplan.storage.sql");
-
+	String folderXml="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
+			"<folder>\n" + 
+			"    <document>\n" + 
+			"        <documents>\n" + 
+			"            <name>test2</name>\n" + 
+			"        </documents>\n" + 
+			"        <documents>\n" + 
+			"            <name>test1</name>\n" + 
+			"        </documents>\n" + 
+			"    </document>\n" + 
+			"</folder>";
+	
 	@Test 
 	public void testJPA() throws Exception {
 		Map<String,String> jpaProperties = new HashMap<String,String>();
@@ -40,29 +53,27 @@ public class TestEclipseLinkSorting {
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.bitplan.testentity", jpaProperties);
 		EntityManager em = emf.createEntityManager();
-		FolderImpl folder=FolderImpl.getFolderExample();
+		FolderJPA folderJpa=FolderJPA.fromXML(folderXml);	
 		em.getTransaction().begin();
-		em.persist(folder);
+		em.persist(folderJpa);
 		em.getTransaction().commit();
 		
 		// Query query = em.createQuery("select f from Folder f");
 		
 	}
 
+	@Test 
+	public void testAsXml() throws Exception {
+		FolderJPA folderJPA=FolderJPA.getFolderExample();
+		String xml=folderJPA.asXML();
+		System.out.println(xml);
+	}
+	
 	@Test
 	public void testSorting() throws Exception {
-		String folderXml="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
-				"<folder>\n" + 
-				"    <document>\n" + 
-				"        <documents>\n" + 
-				"            <name>test2</name>\n" + 
-				"        </documents>\n" + 
-				"        <documents>\n" + 
-				"            <name>test1</name>\n" + 
-				"        </documents>\n" + 
-				"    </document>\n" + 
-				"</folder>";
-		FolderImpl folder=FolderImpl.fromXML(folderXml);	
+	
+		FolderJPA folder=FolderJPA.fromXML(folderXml);	
+		assertNotNull(folder);
 		List<Document> sortedDocuments = folder.getDocumentsByModificationDate();
 		for (Document document : sortedDocuments) {
 			System.out.println(document.getName());

@@ -1,61 +1,40 @@
 package com.bitplan.java8sorttest;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Entity(name="Document")
-@Table(name = "document")
 public class DocumentImpl implements Document {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1206897141744490247L;
-  
-	@Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-  
+
 	String name;
 	Folder parentFolder;
 
-	/**
-	 * @return the parentFolder
-	 */
-	@ManyToOne(targetEntity=FolderImpl.class)
-	public Folder getParentFolder() {
-		return parentFolder;
+	public DocumentImpl() {
 	}
 
-	/**
-	 * @param parentFolder the parentFolder to set
-	 */
-	public void setParentFolder(FolderImpl parentFolder) {
-		this.parentFolder = parentFolder;
-	}
-
-	/**
-	 * default constructor to make jaxb happy
-	 */
-	public DocumentImpl(){};
-	
-	public DocumentImpl(String pName) {
-		name = pName;
+	public DocumentImpl(String name) {
+		this.setName(name);
 	}
 
 	public String getName() {
 		return name;
 	}
-	
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Folder getParentFolder() {
+		return parentFolder;
+	}
+	
+	/**
+	 * @param parentFolder the parentFolder to set
+	 */
+	public void setParentFolder(Folder parentFolder) {
+		this.parentFolder = parentFolder;
+	}
+	
+	public Document getImpl() {
+		return this;
+	}
+
 }
