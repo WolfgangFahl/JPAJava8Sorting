@@ -1,5 +1,7 @@
 package com.bitplan.java8sorting;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,12 +22,20 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 import org.eclipse.persistence.indirection.IndirectList;
 import org.junit.Test;
 
+/**
+ * Testcase for 
+ * http://stackoverflow.com/questions/26816650/java8-collections-sort-sometimes-does-not-sort-jpa-returned-lists
+ * @author wf
+ *
+ */
 public class TestJPASorting {
+	public static final int NUM_DOCUMENTS = 3;
 	protected static Logger LOGGER = Logger.getLogger("com.bitplan.storage.sql");
 	
 	public static class ByNameComparator implements Comparator<Document> {
@@ -81,7 +91,7 @@ public class TestJPASorting {
 		String name;
 
 		@OneToMany(cascade = CascadeType.ALL, mappedBy = "parentFolder")
-		List<Document> documents=new ArrayList<Document>();
+		List<Document> documents;
 
 		/**
 		 * @return the name
@@ -134,7 +144,8 @@ public class TestJPASorting {
 		public static Folder getFolderExample() {
 			Folder folder = new Folder();
 			folder.setName("testFolder");
-			for (int i=3;i>0;i--) {
+			folder.setDocuments(new ArrayList<Document>());
+			for (int i=NUM_DOCUMENTS;i>0;i--) {
 				Document document=new Document();
 				document.setName("test"+i);
 				document.setParentFolder(folder);
@@ -178,12 +189,34 @@ public class TestJPASorting {
 		em.getTransaction().commit();		
 	}
 	
+	/**
+	 * check the sorting
+	 * @param sortedDocuments
+	 */
+	public void checkSorting(List<Document> sortedDocuments) {
+		assertEquals(3,sortedDocuments.size());
+		for (int i=1;i<=NUM_DOCUMENTS;i++) {
+		  Document document=sortedDocuments.get(i-1);
+		  assertEquals("test"+i,document.getName());
+		}
+	}
 
 	@Test
 	public void testSorting() {
 		Folder folder=Folder.getFolderExample();
 		EntityManager em=getEntityManager();
 		persist(em,folder);
-		List<Document> sortedDocuments = folder.getDocumentsByName();
+	  // sort list directly created from memory
+		checkSorting(folder.getDocumentsByName());
+		
+		// detach entities;
+		em.clear();
+		String sql="select f from Folder f";
+		Query query = em.createQuery(sql);
+    @SuppressWarnings("unchecked")
+		List<Folder> folders = query.getResultList();
+    assertEquals(1,folders.size());
+    Folder folderJPA=folders.get(0);
+		checkSorting(folderJPA.getDocumentsByName());
 	}
 }
