@@ -19,8 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author wf
  *
  */
-@Entity(name="Document")
-@Table(name = "document")
+@Entity(name="Document1")
+@Table(name = "document1")
 @XmlRootElement(name = "document")
 @Access(AccessType.PROPERTY)
 public class DocumentJPA implements Document,Serializable {

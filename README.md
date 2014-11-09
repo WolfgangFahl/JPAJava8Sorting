@@ -15,13 +15,13 @@ This project is also referenced from the stackoverflow question:
 #Model
 Basically a 1:n relationship between Folder and Document is modelled for JAXB and JPA usage:
 
-class Folder 
-   String name
-   <List> Document documents
+##class Folder 
+- String name
+- <List> Document documents
 
-class Document
-   String name
-   Folder parentFolder
+##class Document
+- String name
+- Folder parentFolder
    
 ##Tables
    
@@ -40,8 +40,8 @@ class Document
     +-------+--------------+------+-----+---------+-------+
    
 ## Testcases
-TestEclipseLinkSorting.java holds the testcases
-The Sorting
+- TestJPASorting.java in package com.bitplan.java8sorting has the simple test case for the Stackoverflow question
+- TestEclipseLinkSortingWithDelegation.java holds the testcase for the delegation version of the problem
 
    
    

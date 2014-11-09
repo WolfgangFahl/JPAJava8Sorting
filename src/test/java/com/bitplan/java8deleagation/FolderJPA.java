@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author wf
  *
  */
-@Entity(name = "Folder")
-@Table(name = "folder")
+@Entity(name = "Folder1")
+@Table(name = "folder1")
 @XmlRootElement(name = "folder")
 @Access(AccessType.PROPERTY)
 public class FolderJPA implements Folder, Serializable {

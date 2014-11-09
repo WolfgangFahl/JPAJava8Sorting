@@ -66,7 +66,7 @@ public class TestEclipseLinkSortingWithDelegation {
 					"com.mysql.jdbc.Driver");
 
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory(
-					"com.bitplan.testentity", jpaProperties);
+					"com.bitplan.java8sorting", jpaProperties);
 			entityManager = emf.createEntityManager();
 		}
 		return entityManager;
@@ -87,7 +87,7 @@ public class TestEclipseLinkSortingWithDelegation {
 	public void testJPA1Write() throws Exception {
 		EntityManager em = getEntityManager();
 		persist(em,FolderJPA.fromXML(folderXml));
-		Query query = em.createQuery("select d from Document d");
+		Query query = em.createQuery("select d from Document1 d");
 		@SuppressWarnings("unchecked")
 		List<Document> documents = query.getResultList();
 		assertEquals(3,documents.size());
@@ -109,7 +109,7 @@ public class TestEclipseLinkSortingWithDelegation {
 	@Test
 	public void testJPA2ReadWithSorting() throws Exception {
 		EntityManager em = getEntityManager();
-		String sql="select f from Folder f";
+		String sql="select f from Folder1 f";
 		List<Folder> folders = getFoldersForQuery(em,sql);
     // folders size is zero at this point this test might have been run standalone
     // so we do the same as testJPA1Write to populate the database
