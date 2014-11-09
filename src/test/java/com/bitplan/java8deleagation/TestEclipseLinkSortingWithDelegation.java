@@ -1,4 +1,4 @@
-package com.bitplan.java8sorttest;
+package com.bitplan.java8deleagation;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +14,6 @@ import javax.persistence.Query;
 
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
 import org.junit.FixMethodOrder;
 /**
  * http://stackoverflow.com/questions/26816650/java8-collections-sort-sometimes-
@@ -28,7 +27,7 @@ import org.junit.FixMethodOrder;
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestEclipseLinkSorting {
+public class TestEclipseLinkSortingWithDelegation {
 	protected static Logger LOGGER = Logger.getLogger("com.bitplan.storage.sql");
 	String folderXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
 			"<folder>\n" + 
@@ -73,22 +72,54 @@ public class TestEclipseLinkSorting {
 		return entityManager;
 	}
 
+	/**
+	 * persist the given Folder with the given entityManager
+	 * @param em
+	 * @param folderJpa
+	 */
+	public void persist(EntityManager em, FolderJPA folderJpa) {
+		em.getTransaction().begin();
+		em.persist(folderJpa);
+		em.getTransaction().commit();		
+	}
+	
 	@Test
 	public void testJPA1Write() throws Exception {
 		EntityManager em = getEntityManager();
-		FolderJPA folderJpa = FolderJPA.fromXML(folderXml);
-		em.getTransaction().begin();
-		em.persist(folderJpa);
-		em.getTransaction().commit();
+		persist(em,FolderJPA.fromXML(folderXml));
+		Query query = em.createQuery("select d from Document d");
+		@SuppressWarnings("unchecked")
+		List<Document> documents = query.getResultList();
+		assertEquals(3,documents.size());
 	}
 
-	@Test
-	public void testJPA2Read() throws Exception {
-		EntityManager em = getEntityManager();
-		Query query = em.createQuery("select f from Folder f");
+	/**
+	 * get the folders for the given query
+	 * @param em
+	 * @param sql
+	 * @return
+	 */
+	public List<Folder> getFoldersForQuery(EntityManager em, String sql) {
+		Query query = em.createQuery(sql);
     @SuppressWarnings("unchecked")
 		List<Folder> folders = query.getResultList();
+    return folders;
+	}
+	
+	@Test
+	public void testJPA2ReadWithSorting() throws Exception {
+		EntityManager em = getEntityManager();
+		String sql="select f from Folder f";
+		List<Folder> folders = getFoldersForQuery(em,sql);
+    // folders size is zero at this point this test might have been run standalone
+    // so we do the same as testJPA1Write to populate the database
+    if (folders.size()==0) {
+    	persist(em,FolderJPA.fromXML(folderXml));
+    	folders = getFoldersForQuery(em,sql);
+    }
     assertEquals(1,folders.size());
+    Folder folder=folders.get(0);
+    List<Document> sortedDocuments = folder.getDocumentsByName();
 	}
 
 	@Test
@@ -100,10 +131,10 @@ public class TestEclipseLinkSorting {
 	}
 
 	@Test
-	public void testSorting() throws Exception {
+	public void testXMLSorting() throws Exception {
 		FolderJPA folder = FolderJPA.fromXML(folderXml);
 		assertNotNull(folder);
-		List<Document> sortedDocuments = folder.getDocumentsByModificationDate();
+		List<Document> sortedDocuments = folder.getDocumentsByName();
 		int index=0;
 		for (Document document : sortedDocuments) {
 			System.out.println(document.getName());

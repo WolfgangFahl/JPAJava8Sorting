@@ -1,4 +1,4 @@
-package com.bitplan.java8sorttest;
+package com.bitplan.java8deleagation;
 
 /**
  * Document interface

@@ -1,4 +1,4 @@
-package com.bitplan.java8sorttest;
+package com.bitplan.java8deleagation;
 
 import java.io.Serializable;
 
@@ -14,6 +14,11 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Combined JPA/JAXB implementation of Document - delegates function calls to DocumentImpl
+ * @author wf
+ *
+ */
 @Entity(name="Document")
 @Table(name = "document")
 @XmlRootElement(name = "document")
@@ -33,7 +38,6 @@ public class DocumentJPA implements Document,Serializable {
 		this.setName(name);
 	}
 	
-
 	@Transient
 	Document impl=new DocumentImpl();
 	@Override
@@ -59,6 +63,7 @@ public class DocumentJPA implements Document,Serializable {
 	@XmlElements({
     @XmlElement(name="Folder", type=FolderJPA.class)
   })
+	
 	@XmlIDREF
 	@Override
 	public Folder getParentFolder() {

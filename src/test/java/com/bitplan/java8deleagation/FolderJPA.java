@@ -1,4 +1,4 @@
-package com.bitplan.java8sorttest;
+package com.bitplan.java8deleagation;
 
 import java.io.Serializable;
 import java.io.StringReader;
@@ -23,6 +23,11 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
+/**
+ * combined JPA, JAXB implementation of Folder -  delegates Function calls to FolderImpl
+ * @author wf
+ *
+ */
 @Entity(name = "Folder")
 @Table(name = "folder")
 @XmlRootElement(name = "folder")
@@ -111,8 +116,8 @@ public class FolderJPA implements Folder, Serializable {
   }
 
 	/**
-	 * get a folder example
-	 * @return
+	 * get a folder example (for testing)
+	 * @return - a test folder with three documents
 	 */
 	public static FolderJPA getFolderExample() {
 		FolderJPA folder = new FolderJPA();

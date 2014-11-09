@@ -1,4 +1,4 @@
-package com.bitplan.java8sorttest;
+package com.bitplan.java8deleagation;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ public interface Folder {
 		getImpl().setDocuments(documents);
 	}
 
-	public default List<Document> getDocumentsByModificationDate() {
-		return getImpl().getDocumentsByModificationDate();
+	public default List<Document> getDocumentsByName() {
+		return getImpl().getDocumentsByName();
 	}
 	
 	public default void addDocument(Document document) { getImpl().addDocument(document);}

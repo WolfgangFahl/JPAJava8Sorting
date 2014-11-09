@@ -1,7 +1,10 @@
-package com.bitplan.java8sorttest;
+package com.bitplan.java8deleagation;
 
-import org.w3c.dom.stylesheets.DocumentStyle;
-
+/**
+ * implementation of Document
+ * @author wf
+ *
+ */
 public class DocumentImpl implements Document {
 
 	String name;
