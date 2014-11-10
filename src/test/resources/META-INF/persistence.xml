@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- -->
+<!-- generic persistence.xml which only specifies a persistence unit name -->
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 	version="2.0">
 	<persistence-unit name="com.bitplan.java8sorting" transaction-type="RESOURCE_LOCAL">
