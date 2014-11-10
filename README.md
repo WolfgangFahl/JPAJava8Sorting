@@ -6,9 +6,9 @@ This project is also referenced from the stackoverflow question:
 #What you need to compile/reproduce
 - maven 3
 - jdk 7 / jdk 8 (to show the differences)
-- mysql
+- mysql if you'd like to see the data
 
-## preparation of mysql database
+## preparation of mysql database (not necessary when using derby in memory code)
     create database testsqlstorage;
     grant all privileges on testsqlstorage to cm@localhost identified by 'secret';
     
