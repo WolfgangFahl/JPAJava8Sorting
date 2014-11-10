@@ -41,6 +41,7 @@ Basically a 1:n relationship between Folder and Document is modelled for JAXB an
    
 ## Testcases
 - TestJPASorting.java in package com.bitplan.java8sorting has the simple test case for the Stackoverflow question
+-- to test with Java 7 remove the com.bitplan.java8delegation package and set target to 1.7 in pom.xml
 - TestEclipseLinkSortingWithDelegation.java holds the testcase for the delegation version of the problem
 
    
